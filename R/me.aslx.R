@@ -14,9 +14,7 @@ me.aslx <- function(be, gama, mu, x, coords, k = 10, cov_theta = NULL) {
   obs_names <- paste0("Obs_", 1:n)
 
   be <- t(be)[, -1, drop = FALSE]
-  if ( p == 1 ) {
-    gama <- as.matrix(gama)
-  } else  gama <- t(gama)
+  gama <- t(gama)
   ind <- matrix(1:(d * (p + 1) ), ncol = d)
   ind <- ind[1, ]
   cov_theta <- cov_theta[-ind, -ind]

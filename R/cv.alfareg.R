@@ -7,8 +7,7 @@
 #### Regression analysis with compositional data containing zero values
 #### Chilean Journal of Statistics, 6(2): 47-57
 ################################
-cv.alfareg <- function(y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NULL, nc = 1,
-                         seed = NULL) {
+cv.alfareg <- function( y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NULL, nc = 1, seed = NULL ) {
   ## y is the compositional data (dependent variable)
   ## x is the independent variables
   ## a is a range of values of alpha
@@ -34,7 +33,7 @@ cv.alfareg <- function(y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NUL
         xtrain <- x[ -folds[[ i ]], -1]
         ytrain <- y[-folds[[ i ]], ]
         yb <- ytr[ -folds[[ i ]], ]
-        yest <- Compositional::alfa.reg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est
+        yest <- CompositionalSR::alfa.reg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est
         kl <- sum(ytest * log(ytest / yest), na.rm = TRUE)
         kl[ is.infinite(kl) ] <- NA
         kula[i, j] <- sum(kl, na.rm = TRUE) / dim(yest)[1]
@@ -67,7 +66,7 @@ cv.alfareg <- function(y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NUL
                 xtrain <- x[ -folds[[ i ]], -1]
                 ytrain <- y[-folds[[ i ]], ]
                 yb <- ytr[ -folds[[ i ]], ]
-                yest <- Compositional::alfa.reg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est
+                yest <- CompositionalSR::alfa.reg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est
                 kl <- sum(ytest * log(ytest / yest), na.rm = TRUE)
                 kl[ is.infinite(kl) ] <- NA
                 ww[i, l] <- sum(kl, na.rm = TRUE) / dim(yest)[1]

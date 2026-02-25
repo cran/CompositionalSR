@@ -1,15 +1,15 @@
-\name{The GWaR model}
-\alias{gwar}
+\name{Robust regression with compositional data using the alpha-transformation}
+\alias{rob.alfareg}
 \title{
-The GW\eqn{\alpha}R model
+Regression with compositional data using the \eqn{\alpha}-transformation
 }
 
 \description{
-The GW\eqn{\alpha}R model.
+Regression with compositional data using the \eqn{\alpha}-transformation.
 }
 
 \usage{
-gwar(y, x, a, coords, h, yb = NULL, nc = 1)
+rob.alfareg(y, x, a, loss = "welsh", xnew = NULL, yb = NULL)
 }
 
 \arguments{
@@ -20,24 +20,22 @@ A matrix with the compositional data.
 A matrix with the continuous predictor variables or a data frame including categorical predictor variables.
 }
 \item{a}{
-The value of the power transformation, it has to be between -1 and 1.
+The value of the power transformation, it has to be between -1 and 1. If zero values are present it has to be greater than 0.
+If \eqn{\alpha=0} the isometric log-ratio transformation is applied and the solution exists in a closed form, since it the classical mutivariate regression.
 }
-\item{coords}{
-A matrix with the coordinates of the locations. The first column is the latitude and the second is the longitude.
+\item{loss}{
+The loss function to use. One of these available options, "barron", "bisquare", "welsh", "optimal", "hampel", "ggw", or "lqq". For more information see the package \emph{gslnls}.
 }
-\item{h}{
-The bandwith value.
+\item{xnew}{
+If you have new data use it, otherwise leave it NULL.
 }
 \item{yb}{
 If you have already transformed the data using the \eqn{\alpha}-transformation with the same \eqn{\alpha} as given in the argument "a", put it here. Othewrise leave it NULL.
 }
-\item{nc}{
-The number of cores to use. IF you have a multicore computer it is advisable to use more than 1. It makes the procedure faster. It is advisable to use it if you have many observations and or many variables, otherwise it will slow down th process.
-}
 }
 
 \details{
-The \eqn{\alpha}-transformation is applied to the compositional data first and then the GW\eqn{\alpha}R model is applied.
+The \eqn{\alpha}-transformation is applied to the compositional data first and then robust multivariate regression is applied. This involves numerical optimisation.
 }
 
 \value{
@@ -49,7 +47,7 @@ The time required by the regression.
 The beta coefficients.
 }
 \item{est}{
-The fitted values.
+The fitted values for xnew if xnew is not NULL.
 }
 }
 
@@ -65,6 +63,10 @@ Tsagris M.T., Preston S. and Wood A.T.A. (2011). A data-based power transformati
 compositional data.
 In Proceedings of the 4th Compositional Data Analysis Workshop, Girona, Spain.
 https://arxiv.org/pdf/1106.1451.pdf
+
+Mardia K.V., Kent J.T., and Bibby J.M. (1979). Multivariate analysis. Academic press.
+
+Aitchison J. (1986). The statistical analysis of compositional data. Chapman & Hall.
 }
 
 \author{
@@ -78,15 +80,14 @@ R implementation and documentation: Michail Tsagris \email{mtsagris@uoc.gr}.
 %}
 
 \seealso{
-\code{\link{cv.gwar}, \link{me.gwar}, \link{alfa.slx}, \link{alfa.reg}
+\code{\link{alfa.reg}, \link{alfareg.nr}, \link{alfa.slx}
 }
 }
 
 \examples{
 data(fadn)
-coords <- fadn[, 1:2]
 y <- fadn[, 3:7]
 x <- fadn[, 8]
-mod <- gwar(y, x, a = 1, coords, h = 0.001)
+mod <- rob.alfareg(y, x, 0.2)
 }
 

@@ -38,8 +38,8 @@ gwar <- function(y, x, a, coords, h, yb = NULL, nc = 1) {
       wei <- sqrt( exp(di / h) )
       ind <- which(wei > 1e-6)
       suppressWarnings( {
-      mod <- minpack.lm::nls.lm( par = ini, fn = regwei, ya = ya[ind, ], ax = ax[ind, ], a = a, wei = wei[ind], 
-                                 ha = ha, d = d, D = D, control = minpack.lm::nls.lm.control(maxiter = 10000) )
+      mod <- minpack.lm::nls.lm( par = ini, fn = regwei, ya = ya[ind, ], ax = ax[ind, ], a = a, wei = wei[ind],
+                                 ha = ha, d = d, D = D )
       } )
       be[i, ] <- as.vector(mod$par)
       be2 <- matrix(mod$par, ncol = d)
@@ -57,8 +57,8 @@ gwar <- function(y, x, a, coords, h, yb = NULL, nc = 1) {
       wei <- sqrt( exp(di / h) )
       ind <- which(wei > 1e-6)
       suppressWarnings( {
-      mod <- minpack.lm::nls.lm( par = ini, fn = regwei, ya = ya[ind, ], ax = ax[ind, ], a = a, wei = wei[ind], 
-                                 ha = ha, d = d, D = D, control = minpack.lm::nls.lm.control(maxiter = 10000) )
+      mod <- minpack.lm::nls.lm( par = ini, fn = regwei, ya = ya[ind, ], ax = ax[ind, ], a = a, wei = wei[ind],
+                                 ha = ha, d = d, D = D )
       } )
       be <- as.vector(mod$par)
       be2 <- matrix(mod$par, ncol = d)

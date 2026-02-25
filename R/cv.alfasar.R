@@ -1,4 +1,4 @@
-cv.alfaslx <- function(y, x, a = seq(0.1, 1, by = 0.1), coords, k = 2:15, nfolds = 10, size = 1000, folds = NULL) {
+cv.alfasar <- function(y, x, a = seq(0.1, 1, by = 0.1), coords, k = 2:15, nfolds = 10, size = 1000, folds = NULL) {
   if ( min(y) == 0 )  a <- a[a>0]
   la <- length(a)
   lk <- length(k)
@@ -24,17 +24,17 @@ cv.alfaslx <- function(y, x, a = seq(0.1, 1, by = 0.1), coords, k = 2:15, nfolds
         ytest <- y[ folds[[ m ]][[ 2 ]], ]
         coordstrain <- coords[folds[[ m ]][[ 1 ]], ]
         coordstest <- coords[folds[[ m ]][[ 2 ]], , drop = FALSE]
-        mod <- CompositionalSR::alfa.slx2( ytrain, xtrain, a[i], coords = coordstrain, k = k, xnew = xtest,
-                                           coordsnew = coordstest, yb = ytr[folds[[ m ]][[ 1 ]], ] )
-        for ( j in 1:lk ) {  
-          yest <- mod$est[[ k[j] ]]
+        for ( j in 1:lk ) {
+          mod <- CompositionalSR::alfa.sar( ytrain, xtrain, a[i], coords = coordstrain, k = k[j], xnew = xtest,
+                                            coordsnew = coordstest, yb = ytr[folds[[ m ]][[ 1 ]], ] )
+          yest <- mod$est
           kl <- ytest * log(ytest / yest)
           kl[ is.infinite(kl) ] <- NA
           kul[m, j] <- sum(kl, na.rm = TRUE) / dim(ytest)[1]
-        }
-      }
+        }  ##  end  for ( j 1:lk ) {
+      }  ##  end  for ( m in 1:nfolds ) {
       kula[i, ] <- Rfast::colmeans(kul)
-    }
+    }  ##  end  for ( i in 1:la ) {
 
     apa <- proc.time() - apa
     best <- which( kula == min(kula), arr.ind = TRUE )

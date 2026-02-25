@@ -1,9 +1,9 @@
-cv.gwar <- function(y, x, a = c(0.1, 0.25, 0.5, 0.75, 1), coords, h, nfolds = 10, folds = NULL) {
+cv.gwar <- function(y, x, a = c(0.1, 0.25, 0.5, 0.75, 1), coords, h, nfolds = 10, size = 1000, folds = NULL) {
 
   if ( min(y) == 0 )  a <- a[a>0]
   apa <- proc.time()
-  if ( is.null(folds) )  folds <- CompositionalSR::spat.folds(coords, nfolds = nfolds)
-  
+  if ( is.null(folds) )  folds <- CompositionalSR::spat.folds(coords, nfolds = nfolds, size = size)
+
   nfolds <- length(folds)
   la <- length(a)
   lh <- length(h)

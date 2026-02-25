@@ -1,11 +1,11 @@
-\name{Tuning the value of alpha in the alpha-regression}
+\name{K-fold cross-validtion for the alpha-regression}
 \alias{cv.alfareg}
 \title{
-Tuning the value of \eqn{\alpha} in the \eqn{\alpha}-regression
+K-fold cross-validtion the \eqn{\alpha}-regression
 }
 
 \description{
-Tuning the value of \eqn{\alpha} in the \eqn{\alpha}-regression.
+K-fold cross-validtion the \eqn{\alpha}-regression.
 }
 
 \usage{
@@ -38,7 +38,7 @@ You can specify your own seed number here or leave it NULL.
 }
 
 \details{
-Tuning the value of \eqn{\alpha} in the \eqn{\alpha}-regression takes place using k-fold cross-validation.
+Tuning the value of \eqn{\alpha} in the \eqn{\alpha}-regression takes place using K-fold cross-validation.
 }
 
 \value{
@@ -47,7 +47,7 @@ A list including:
 The runtime required by the cross-validation.
 }
 \item{perf}{
-A vector with the Kullback-Leibler divergence of the observed from the fitted values. Every value corresponds to a value of \eqn{\alpha}.
+A vector with the average Kullback-Leibler divergence, for every value of \eqn{\alpha}.
 }
 \item{opt}{
 A vector with the minimum Kullback-Leibler divergence and the optimal value of \eqn{\alpha}.
@@ -55,7 +55,7 @@ A vector with the minimum Kullback-Leibler divergence and the optimal value of \
 }
 
 \references{
-Tsagris M. (2025). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, spatially-lagged, and geographically-weighted regression models.
+Tsagris M. (2025). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, spatially-lagged, spatial autoregressive and geographically-weighted regression models.
 https://arxiv.org/pdf/2510.12663
 
 Tsagris M. (2015). Regression analysis with compositional data containing zero values.

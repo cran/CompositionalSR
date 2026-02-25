@@ -28,18 +28,16 @@ alfa.reg <- function(y, x, a, covb = FALSE, xnew = NULL, yb = NULL) {
   D <- dim(y)[2]
   d <- D - 1  ## dimensionality of the simplex
 
-  if ( a == 0 ) {
+  if ( a <= 1e-5 ) {
     mod <- Compositional::comp.reg(y, x[, -1], yb = yb)
     be <- mod$be
-    if ( !is.null(seb) )  seb <- mod$seb
-    runtime <- mod$runtime
 
   } else {
     ha <- t( Compositional::helm(D) )
     ini <- as.vector( solve(crossprod(x), crossprod(x, ya) ) )
     suppressWarnings({
-      mod <- minpack.lm::nls.lm( par = ini, fn = reg, ya = ya, ax = ax, a = a, ha = ha, d = d, D = D,
-                                 control = minpack.lm::nls.lm.control(maxiter = 10000) )
+      mod <- minpack.lm::nls.lm(par = ini, fn = reg, ya = ya, ax = ax, a = a, ha = ha, d = d, D = D)
+
     })
     be <- matrix(mod$par, ncol = d)
 
@@ -60,18 +58,29 @@ alfa.reg <- function(y, x, a, covb = FALSE, xnew = NULL, yb = NULL) {
     p <- dim(x)[2] - 1
     rownames(be) <- c("constant", paste("X", 1:p, sep = "") )
   } else rownames(be)  <- c("constant", colnames(x)[-1] )
+  colnames(be) <- paste("Y", 2:D, sep = "")
 
-  if ( covb )  {
-    covb <- try( solve(mod$hessian), silent = TRUE )
-    if ( !identical( class(covb), "try-error" ) ) {
-      a1 <- paste("Y", 2:D, sep = "")
-      a2 <- rownames(be)
-      rownames(covb) <- colnames(covb) <- as.vector( t( outer(a1, a2, paste, sep = ":") ) )
-    } else  covb <- NULL
-  }
+  if ( covb ) {
+    res <- optim( as.vector(be), .regar, ya = ya, ax = ax, a = a, ha = ha, d = d,
+                  D = D, hessian = TRUE, method = "BFGS", control = list(maxit = 1000) )
+    covbe <- solve(res$hessian)
+    a2 <- colnames(x)
+    a1 <- colnames(be)
+    nam <- as.vector( t( outer(a1, a2, paste, sep = ":") ) )
+    colnames(covbe) <- rownames(covbe) <- nam
+  } else covbe <- NULL
 
-  list(runtime = runtime, be = be, covb = covb, est = est)
+  list(runtime = runtime, be = be, covbe = covbe, dev = mod$deviance, est = est)
 }
 
+
+.regar <- function(para, ya, ax, a, ha, d, D) {
+  be <- matrix(para, ncol = d)
+  zz <- cbind( 1, exp(ax %*% be) )
+  ta <- rowSums(zz)
+  za <- zz / ta
+  ma <- ( D / a * za - 1/a ) %*% ha
+  sum( (ya - ma)^2 )
+}
 
 

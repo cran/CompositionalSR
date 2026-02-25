@@ -1,11 +1,13 @@
 #useDynLib(Compositional, .registration = TRUE)
 
-importFrom("Compositional", alfa, alfa.reg, comp.reg, helm)
+importFrom("Compositional", alfa, comp.reg, helm)
 importFrom("Rfast", rowsums, rowOrder, colmeans, rowMins, Dist, dista, eachcol.apply)
-importFrom("stats", model.matrix)
-importFrom("minpack.lm", nls.lm, nls.lm.control)
+importFrom("stats", model.matrix, as.formula, coef, optimize, rnorm, optim)
+importFrom("minpack.lm", nls.lm)
 importFrom("sf", st_as_sf)
 importFrom("blockCV", cv_spatial)
+importFrom("gslnls", gsl_nls, gsl_nls_control)
+importFrom("utils", flush.console)
 
 import("doParallel")
 import("parallel")

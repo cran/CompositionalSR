@@ -1,41 +1,38 @@
-\name{Marginal effects for the GWalphaR model}
-\alias{me.gwar}
+\name{The gradient vector of the alpha-regression model at each observation}
+\alias{ar.grads}
 \title{
-Marginal effects for the GW\eqn{\alpha}R model
+The gradient vector of the \eqn{\alpha}-regression model at each observation
 }
 
 \description{
-Marginal effects for the GW\eqn{\alpha}R model.
+The gradient vector of the \eqn{\alpha}-regression model at each observation.
 }
 
 \usage{
-me.gwar(be, mu, x)
+ar.grads(y, x, a, be)
 }
 
 \arguments{
-\item{be}{
-A matrix with the beta regression coefficients of the \eqn{\alpha}-regression model.
-}
-\item{mu}{
-The fitted values of the \eqn{\alpha}-regression.
+\item{y}{
+A matrix with the compositional data.
 }
 \item{x}{
-A matrix with the continuous predictor variables or a data frame. Categorical predictor variables are not suited here.
+A matrix with the continuous predictor variables or a data frame including categorical predictor variables.
+}
+\item{a}{
+The value of the power transformation, it has to be between -1 and 1. If zero values are present it has to be greater than 0.
+}
+\item{be}{
+The regression coefficients of the \eqn{\alpha}-SAR model.
 }
 }
 
 \details{
-The location-specific marginal effects for the GW\eqn{\alpha}R model are computed.
+The gradient vector of the \eqn{\alpha}-regression model is computed at each observation.
 }
 
 \value{
-A list including:
-\item{me}{
-An array with the location-specific marginal effects of each component for each predictor variable.
-}
-\item{ame}{
-The average location-specific marginal effects of each component for each predictor variable.
-}
+A matrix with the gradient vector computed at each observation.
 }
 
 \references{
@@ -63,7 +60,7 @@ R implementation and documentation: Michail Tsagris \email{mtsagris@uoc.gr}.
 %}
 
 \seealso{
-\code{\link{gwar}, \link{me.aslx}, \link{me.ar}
+\code{\link{alfa.sar}, \link{cv.alfasar}, \link{alfa.reg}
 }
 }
 
@@ -71,8 +68,9 @@ R implementation and documentation: Michail Tsagris \email{mtsagris@uoc.gr}.
 data(fadn)
 coords <- fadn[, 1:2]
 y <- fadn[, 3:7]
-x <- fadn[, 8]
-mod <- gwar(y, x, a = 1, coords, h = 0.001)
-me <- me.gwar(mod$be, mod$est, x)
+x <- fadn[, 8:10]
+mod <- alfa.reg(y, x, 0.5)
+grads <- ar.grads(y, x, a = 0.5, mod$be)
+colSums(grads)
 }
 

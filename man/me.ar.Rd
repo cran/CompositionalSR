@@ -28,7 +28,7 @@ The covariance matrix of the beta regression coefficients. If you pass this argu
 }
 
 \details{
-The \eqn{\alpha}-transformation is applied to the compositional data first and then the \eqn{\alpha}-regression model is applied.
+The marginal effects of the \eqn{\alpha}-regression model are computed.
 }
 
 \value{
@@ -42,6 +42,9 @@ The average marginal effects of each component for each predictor variable.
 }
 
 \references{
+Tsagris M. (2025). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, spatially-lagged, spatial autoregressive and geographically-weighted regression models.
+https://arxiv.org/pdf/2510.12663
+
 Tsagris M. (2015). Regression analysis with compositional data containing zero values.
 Chilean Journal of Statistics, 6(2): 47-57.
 https://arxiv.org/pdf/1508.01913v1.pdf

@@ -9,7 +9,7 @@ Spatial k-folds.
 }
 
 \usage{
-spat.folds(coords, nfolds = 10)
+spat.folds(coords, nfolds = 10, size = 1000)
 }
 
 \arguments{
@@ -18,6 +18,9 @@ A matrix with the coordinates of the locations. The first column is the latitude
 }
 \item{nfolds}{
 The number of spatial folds to create.
+}
+\item{size}{
+A numeric value of the specified range by which blocks are created and training/testing data are separated. This distance should be in metres. If you have big regions you should consider increasing this number. For more information see the package \emph{blockCV}.
 }
 }
 
@@ -49,7 +52,7 @@ R implementation and documentation: Michail Tsagris \email{mtsagris@uoc.gr}.
 
 \examples{
 data(fadn)
-coords <- fadn[, 1:2]
-folds <- spat.folds(coords, nfolds = 10)
+coords <- fadn[1:100, 1:2]
+folds <- spat.folds(coords, nfolds = 5)
 }
 

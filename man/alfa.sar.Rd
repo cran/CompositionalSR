@@ -1,17 +1,15 @@
-\name{The alpha-SLX model}
-\alias{alfa.slx}
-\alias{alfa.slx2}
+\name{The alpha-SAR model}
+\alias{alfa.sar}
 \title{
-The \eqn{\alpha}-SLX model
+The \eqn{\alpha}-SAR model
 }
 
 \description{
-The \eqn{\alpha}-SLX model.
+The \eqn{\alpha}-SAR model.
 }
 
 \usage{
-alfa.slx(y, x, a, coords, k = 10, covb = FALSE, xnew = NULL, coordsnew, yb = NULL)
-alfa.slx2(y, x, a, coords, k = 2:15, xnew = NULL, coordsnew, yb = NULL)
+alfa.sar(y, x, a, coords, k = 10, covb = FALSE, xnew = NULL, coordsnew, yb = NULL)
 }
 
 \arguments{
@@ -28,10 +26,10 @@ The value of the power transformation, it has to be between -1 and 1. If zero va
 A matrix with the coordinates of the locations. The first column is the latitude and the second is the longitude.
 }
 \item{k}{
-The number of nearest neighbours to consider for the contiguity matrix. For the alfa.slx2() this should be a vector.
+The number of nearest neighbours to consider for the contiguity matrix.
 }
 \item{covb}{
-Do you want the covariance matrix of the regression coefficients to be returned? If TRUE, this will slow down the process, as it is computed numerically.
+Do you want the covariance matrix of the spatial autoregressive parameter and the regression coefficients to be returned? If TRUE, this will slow down the process, as it is computed numerically.
 }
 \item{xnew}{
 If you have new data use it, otherwise leave it NULL.
@@ -41,17 +39,16 @@ A matrix with the coordinates of the new locations. The first column is the lati
 }
 \item{yb}{
 If you have already transformed the data using the \eqn{\alpha}-transformation with the same \eqn{\alpha} as given in the argument "a", put it here. Othewrise leave it NULL.
-
-This is intended to be used in the function \code{\link{cv.alfareg}} in order to speed up the process. The time difference in that function is small for small samples. But, if you have a few thousands and or a few more components, there will be bigger differences.
 }
 }
 
 \details{
-The \eqn{\alpha}-transformation is applied to the compositional data first and then the spatially lagged X (SLX) model is applied.
+The \eqn{\alpha}-transformation is applied to the compositional data first and the spatial autocorrelation (SAR) model is applied. The function performs a grid search searching for the range
+of good values of \eqn{\rho} and then uses that as starting value.
 }
 
 \value{
-For the alfa.slx() a list including:
+A list including:
 \item{runtime}{
 The time required by the regression.
 }
@@ -69,23 +66,6 @@ The sum of the squared residuals, as produced by the function \bold{minpack.lm::
 }
 \item{est}{
 The fitted values for xnew if xnew and coordsnew are not NULL.
-}
-
-For the alfa.slx2() a list including:
-\item{runtime}{
-The time required by the regression.
-}
-\item{be}{
-A list with the beta coefficients for each value of k.
-}
-\item{gama}{
-A list with the gamma coefficients.
-}
-\item{dev}{
-A vector with the sum of the squared residuals, as produced by the function \bold{minpack.lm::nls.lm()}. The positions of the vector are the ones defined by the argument k that is a vector.
-}
-\item{est}{
-A list with the fitted values for the xnew and coordsnew, for each value of k.
 }
 }
 
@@ -120,9 +100,8 @@ R implementation and documentation: Michail Tsagris \email{mtsagris@uoc.gr}.
 
 \examples{
 data(fadn)
-coords <- fadn[, 1:2]
-y <- fadn[, 3:7]
-x <- fadn[, 8]
-mod <- alfa.slx(y, x, a = 0.5, coords, k = 10)
+coords <- fadn[1:50, 1:2]
+y <- fadn[1:50, 3:7]
+x <- fadn[1:50, 8]
 }
 
