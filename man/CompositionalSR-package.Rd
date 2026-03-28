@@ -7,15 +7,15 @@ Spatial Regression Models with Compositional Data
 
 \description{
 Spatial regression models with compositional responses using the \eqn{\alpha}--transformation.
-The models includes are the \eqn{\alpha}-regression (not spatial), the \eqn{\alpha}-spatially lagged X (\eqn{\alpha}-SLX) model and the geographically weighted \eqn{\alpha}-regression (GW\eqn{\alpha}R) model.
+The models included are the \eqn{\alpha}-regression (not spatial), the \eqn{\alpha}-regression (not spatial) with compositional predictors, the \eqn{\alpha}-spatially lagged X (\eqn{\alpha}-SLX) model and the geographically weighted \eqn{\alpha}-regression (GW\eqn{\alpha}R) model.
 }
 
 \details{
 \tabular{ll}{
 Package: \tab CompositionalSR\cr
 Type: \tab Package\cr
-Version: \tab 1.1 \cr
-Date: \tab 2026-02-25\cr
+Version: \tab 1.2 \cr
+Date: \tab 2026-03-28\cr
 License: \tab GPL-2\cr
 }
 }
@@ -29,7 +29,7 @@ Michail Tsagris <mtsagris@uoc.gr>
 }
 
 \references{
-Tsagris M. (2025). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, spatially-lagged, spatial autoregressive and geographically-weighted regression models.
+Tsagris M. and Pantazis Y. (2026). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, spatially-lagged, spatial autoregressive and geographically-weighted regression models.
 https://arxiv.org/pdf/2510.12663
 
 Tsagris M. (2015). Regression analysis with compositional data containing zero values.

@@ -1,4 +1,5 @@
 \name{Regression with compositional data using the alpha-transformation}
+\alias{areg}
 \alias{alfa.reg}
 \alias{alfa.reg2}
 \alias{alfa.reg3}
@@ -11,6 +12,7 @@ Regression with compositional data using the \eqn{\alpha}-transformation.
 }
 
 \usage{
+areg(y, x, a, covb = FALSE, xnew = NULL, yb = NULL)
 alfa.reg(y, x, a, covb = FALSE, xnew = NULL, yb = NULL)
 alfa.reg2(y, x, a, xnew = NULL, ncores = 1)
 alfa.reg3(y, x, a = c(-1, 1), xnew = NULL)
@@ -21,29 +23,34 @@ alfa.reg3(y, x, a = c(-1, 1), xnew = NULL)
 A matrix with the compositional data.
 }
 \item{x}{
-A matrix with the continuous predictor variables or a data frame including categorical predictor variables.
+A matrix with the continuous predictor variables or a data frame including categorical predictor
+variables.
 }
 \item{a}{
-The value of the power transformation, it has to be between -1 and 1. If zero values are present it has to be greater than 0.
-If \eqn{\alpha=0} the isometric log-ratio transformation is applied and the solution exists in a closed form, since it the
-classical mutivariate regression. For the alfa.reg2() this should be a vector of \eqn{\alpha} values and the function call
-repeatedly the alfa.reg() function. For the alfa.reg3() function it should be a vector with two values, the endpoints of the
-interval of \eqn{\alpha}. This function searches for the optimal vaue of \eqn{\alpha} that minimizes the Kullback-Leibler
-between the observed and fitted compositions. Using the \code{\link{optimize}} function it searches for the optimal value of
-\eqn{\alpha}. Instead of choosing the value of \eqn{\alpha} using \code{\link{cv.alfareg}} (that uses cross-validation)
-one can select it this way.
+The value of the power transformation, it has to be between -1 and 1. If zero values are present it
+has to be greater than 0. If \eqn{\alpha=0} the isometric log-ratio transformation is applied and the
+solution exists in a closed form, since it the classical mutivariate regression. For the alfa.reg2()
+this should be a vector of \eqn{\alpha} values and the function call repeatedly the alfa.reg() function. For the alfa.reg3() function it should be a vector with two values, the endpoints of the
+interval of \eqn{\alpha}. This function searches for the optimal vaue of \eqn{\alpha} that minimizes
+the Kullback-Leibler between the observed and fitted compositions. Using the \code{\link{optimize}}
+function it searches for the optimal value of \eqn{\alpha}. Instead of choosing the value of
+\eqn{\alpha} using \code{\link{cv.alfareg}} (that uses cross-validation) one can select it this way.
+
+The function areg() is faster as it passes the Jacobian matrix to the nls.lm() function.
 }
 \item{covb}{
-Do you want the covariance matrix of the regression coefficients to be returned? If TRUE, this will slow down the process, as it is computed numerically.
+Do you want the covariance matrix of the regression coefficients to be returned?
+If TRUE, this will slow down the process, as it is computed numerically.
 }
 \item{xnew}{
 If you have new data use it, otherwise leave it NULL.
 }
 \item{ncores}{
-The number of cores to use for parallel computations. 
+The number of cores to use for parallel computations.
 }
 \item{yb}{
-If you have already transformed the data using the \eqn{\alpha}-transformation with the same \eqn{\alpha} as given in the argument "a", put it here. Othewrise leave it NULL.
+If you have already transformed the data using the \eqn{\alpha}-transformation with the same
+\eqn{\alpha} as given in the argument "a", put it here. Othewrise leave it NULL.
 
 This is intended to be used in the function \code{\link{cv.alfareg}} in order to speed up the process. The time difference in that function is small for small samples.
 But, if you have a few thousands and or a few more components, there will be bigger differences.
@@ -51,7 +58,11 @@ But, if you have a few thousands and or a few more components, there will be big
 }
 
 \details{
-The \eqn{\alpha}-transformation is applied to the compositional data first and then multivariate regression is applied. This involves numerical optimisation. The alfa.reg2() function accepts a vector with many values of \eqn{\alpha}, while the the alfa.reg3() function searches for the value of \eqn{\alpha} that minimizes the Kulback-Leibler divergence between the observed and the fitted compositional values. The functions are highly optimized.
+The \eqn{\alpha}-transformation is applied to the compositional data first and then multivariate
+regression is applied. This involves numerical optimisation. The alfa.reg2() function accepts a
+vector with many values of \eqn{\alpha}, while the the alfa.reg3() function searches for the
+value of \eqn{\alpha} that minimizes the Kulback-Leibler divergence between the observed and
+the fitted compositional values. The functions are highly optimized.
 }
 
 \value{
@@ -78,7 +89,7 @@ For the alfa.reg3() function a list with the previous elements plus an output "a
 }
 
 \references{
-Tsagris M. (2025). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, spatially-lagged, spatial autoregressive and geographically-weighted regression models.
+Tsagris M. and Pantazis Y. (2026). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, spatially-lagged, spatial autoregressive and geographically-weighted regression models.
 https://arxiv.org/pdf/2510.12663
 
 Tsagris M. (2015). Regression analysis with compositional data containing zero values.
@@ -86,7 +97,7 @@ Chilean Journal of Statistics, 6(2): 47-57.
 https://arxiv.org/pdf/1508.01913v1.pdf
 
 Tsagris M.T., Preston S. and Wood A.T.A. (2011). A data-based power transformation for
-compositional data. 
+compositional data.
 In Proceedings of the 4th Compositional Data Analysis Workshop, Girona, Spain.
 https://arxiv.org/pdf/1106.1451.pdf
 

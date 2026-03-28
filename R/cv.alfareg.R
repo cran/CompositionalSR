@@ -33,8 +33,8 @@ cv.alfareg <- function( y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NU
         xtrain <- x[ -folds[[ i ]], -1]
         ytrain <- y[-folds[[ i ]], ]
         yb <- ytr[ -folds[[ i ]], ]
-        yest <- CompositionalSR::alfa.reg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est
-        kl <- sum(ytest * log(ytest / yest), na.rm = TRUE)
+        yest <- CompositionalSR::areg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est
+        kl <- ytest * log(ytest / yest)
         kl[ is.infinite(kl) ] <- NA
         kula[i, j] <- sum(kl, na.rm = TRUE) / dim(yest)[1]
       }
@@ -54,7 +54,7 @@ cv.alfareg <- function( y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NU
     doParallel::registerDoParallel(cl)
     if ( is.null(folds) )  folds <- Compositional::makefolds(ina, nfolds = nfolds,
                                                              stratified = FALSE, seed = seed)
-    kula <- foreach::foreach(j = 1:nc, .combine = cbind, .packages = "Rfast", .export = c("alfa.reg",
+    kula <- foreach::foreach(j = 1:nc, .combine = cbind, .packages = "Rfast", .export = c("areg",
             "alfa", "helm", "comp.reg", "multivreg", "rowsums", "colmeans", "colVars") ) %dopar% {
             ba <- val[, j]
             ww <- matrix(nrow = nfolds, ncol = length(ba) )
@@ -66,8 +66,8 @@ cv.alfareg <- function( y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NU
                 xtrain <- x[ -folds[[ i ]], -1]
                 ytrain <- y[-folds[[ i ]], ]
                 yb <- ytr[ -folds[[ i ]], ]
-                yest <- CompositionalSR::alfa.reg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est
-                kl <- sum(ytest * log(ytest / yest), na.rm = TRUE)
+                yest <- CompositionalSR::areg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est
+                kl <- ytest * log(ytest / yest)
                 kl[ is.infinite(kl) ] <- NA
                 ww[i, l] <- sum(kl, na.rm = TRUE) / dim(yest)[1]
 
