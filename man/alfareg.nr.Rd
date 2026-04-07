@@ -10,7 +10,7 @@ The \eqn{alpha}-regression using Newton-Raphson.
 
 \usage{
 alfareg.nr(y, x, alpha = 1, beta_init = NULL, max_iter = 100,
-tol = 1e-6, line_search = TRUE)
+tol = 1e-6, line_search = TRUE, hess.eps = 1e-5)
 }
 
 \arguments{
@@ -35,6 +35,9 @@ The tolerance value to terminate the Newton-Raphson algorithm.
 \item{line_search}{
 Do you want to perform line search? The default value is TRUE.
 }
+\item{hess.eps}{
+This is the infinitesimal change to compute the Hessian matrix numerically.
+}
 }
 
 \details{
@@ -56,7 +59,7 @@ The beta coefficients.
 The sum of the squared residuals.
 }
 \item{est}{
-The fitted values.
+The predicted values if xnew is not NULL.
 }
 \item{covb}{
 The covariance matrix of the beta coefficients, or NULL if it is singular.
@@ -64,7 +67,7 @@ The covariance matrix of the beta coefficients, or NULL if it is singular.
 }
 
 \references{
-Tsagris M. and Pantazis Y. (2026). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, spatially-lagged, spatial autoregressive and geographically-weighted regression models.
+Tsagris M. and Pantazis Y. (2026). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, temporal and spatial regression models including compositional predictors.
 https://arxiv.org/pdf/2510.12663
 
 Tsagris M. (2015). Regression analysis with compositional data containing zero values.

@@ -1,15 +1,15 @@
-\name{Spatial K-fold cross-validation for the alpha-SAR model}
-\alias{cv.alfasar}
+\name{Spatial K-fold cross-validation for the alpha-ESF model}
+\alias{cv.alfaesf}
 \title{
-Spatial K-fold cross-validation for the \eqn{\alpha}-SAR model
+Spatial K-fold cross-validation for the \eqn{\alpha}-ESF model
 }
 
 \description{
-Spatial K-fold cross-validation for the \eqn{\alpha}-SAR model
+Spatial K-fold cross-validation for the \eqn{\alpha}-ESF model
 }
 
 \usage{
-cv.alfasar(y, x, a = seq(0.1, 1, by = 0.1), coords, k = 2:15,
+cv.alfaesf(y, x, a = seq(0.1, 1, by = 0.1), coords, model = "exp",
 nfolds = 10, size = 1000, folds = NULL)
 }
 
@@ -21,13 +21,17 @@ A matrix with compositional data. zero values are allowed.
 A matrix with the continuous predictor variables or a data frame including categorical predictor variables.
 }
 \item{a}{
-The value of the power transformation, it has to be between -1 and 1. If zero values are present it has to be greater than 0. If \eqn{\alpha=0} the isometric log-ratio transformation is applied.
+The value of the power transformation, it has to be between -1 and 1. If zero values are present
+it has to be greater than 0. If \eqn{\alpha=0} the isometric log-ratio transformation is applied.
 }
 \item{coords}{
-A matrix with the coordinates of the locations. The first column is the latitude and the second is the longitude.
+A matrix with the coordinates of the locations. The first column is the latitude and the second
+is the longitude.
 }
-\item{k}{
-A vector with the nearest neighbours to consider for the contiguity matrix.
+\item{model}{
+Type of kernel to model spatial dependence. The currently available options are "exp" for the
+exponential kernel, "gau" for the Gaussian kernel, and "sph" for the spherical kernel.
+For more information check the package "spmoran".
 }
 \item{nfolds}{
 The number of folds to split the data.
@@ -40,7 +44,8 @@ If you have the list with the folds supply it here. You can also leave it NULL a
 }
 }
 \details{
-The 10-fold spatial cross-validation protocol is applied to choose the optimal values of \eqn{\alpha} and k.
+The 10-fold spatial cross-validation protocol is applied to choose the optimal values of \eqn{\alpha}
+and k.
 }
 
 \value{
@@ -52,12 +57,13 @@ The runtime required by the cross-validation.
 A vector with the average Kullback-Leibler divergence, for every value of \eqn{\alpha}.
 }
 \item{opt}{
-A vector with the minimum Kullback-Leibler divergence, the optimal value of \eqn{\alpha} and k.
+A vector with the minimum Kullback-Leibler divergence, and the optimal value of \eqn{\alpha}.
 }
 }
 
 \references{
-Tsagris M. and Pantazis Y. (2026). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, temporal and spatial regression models including compositional predictors.
+Tsagris M. and Pantazis Y. (2026). The \eqn{\alpha}--regression for compositional data: a unified
+framework for standard, spatially-lagged, spatial autoregressive and geographically-weighted regression models.
 https://arxiv.org/pdf/2510.12663
 
 Tsagris M. (2015). Regression analysis with compositional data containing zero values.
@@ -67,6 +73,10 @@ https://arxiv.org/pdf/1508.01913v1.pdf
 Tsagris M.T., Preston S. and Wood A.T.A. (2011). A data-based power transformation for compositional data.
 In Proceedings of the 4th Compositional Data Analysis Workshop, Girona, Spain.
 https://arxiv.org/pdf/1106.1451.pdf
+
+Tsagris M., Papadovasilakis Z., Lakiotaki K. and Tsamardinos I. (2022).
+The \eqn{\gamma}-OMP Algorithm for Feature Selection With Application to Gene Expression Data.
+IEEE/ACM Transactions on Computational Biology and Bioinformatics, 19(2), 1214--1224.
 }
 
 \author{
@@ -87,7 +97,8 @@ R implementation and documentation: Michail Tsagris \email{mtsagris@uoc.gr}.
 \examples{
 data(fadn)
 coords <- fadn[1:50, 1:2]
-y <- fadn[1:50, 3:7]
-x <- fadn[1:50, 8]
+y <- fadn[, 3:7]
+x <- fadn[, 8]
+mod <- cv.alfaesf(y, x, a = c(0.1, 0.5), coords, nfolds = 5)
 }
 

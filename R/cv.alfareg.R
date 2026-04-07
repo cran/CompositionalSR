@@ -18,6 +18,7 @@ cv.alfareg <- function( y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NU
   n <- dim(y)[1]
   ina <- 1:n
   x <- model.matrix( y~., data=as.data.frame(x) )
+  x <- x[, -1, drop = FALSE]
   if ( is.null(folds) )  folds <- Compositional::makefolds(ina, nfolds = nfolds,
                                                            stratified = FALSE, seed = seed)
   nfolds <- length(folds)
@@ -28,9 +29,9 @@ cv.alfareg <- function( y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NU
     for (j in 1:la) {
       ytr <- Compositional::alfa(y, a[j])$aff
       for ( i in 1:nfolds ) {
-        xtest <- x[ folds[[ i ]], -1, drop = FALSE]
+        xtest <- x[ folds[[ i ]], ]
         ytest <- y[ folds[[ i ]], ]
-        xtrain <- x[ -folds[[ i ]], -1]
+        xtrain <- x[ -folds[[ i ]], ]
         ytrain <- y[-folds[[ i ]], ]
         yb <- ytr[ -folds[[ i ]], ]
         yest <- CompositionalSR::areg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est
@@ -61,9 +62,9 @@ cv.alfareg <- function( y, x, a = seq(0.1, 1, by = 0.1), nfolds = 10, folds = NU
             for ( l in 1:length(ba) ) {
               ytr <- Compositional::alfa(y, ba[l])$aff
               for (i in 1:nfolds) {
-                xtest <- x[ folds[[ i ]], -1, drop = FALSE]
+                xtest <- x[ folds[[ i ]], ]
                 ytest <- y[ folds[[ i ]], ]
-                xtrain <- x[ -folds[[ i ]], -1]
+                xtrain <- x[ -folds[[ i ]], ]
                 ytrain <- y[-folds[[ i ]], ]
                 yb <- ytr[ -folds[[ i ]], ]
                 yest <- CompositionalSR::areg(ytrain, xtrain, a[j], xnew = xtest, yb = yb)$est

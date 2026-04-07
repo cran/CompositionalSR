@@ -55,9 +55,6 @@ The time required by the regression.
 \item{be}{
 The beta coefficients.
 }
-\item{gama}{
-The gamma coefficients.
-}
 \item{covbe}{
 The covariance matrix if covb was set to TRUE, otherwise NULL.
 }
@@ -70,7 +67,7 @@ The fitted values for xnew if xnew and coordsnew are not NULL.
 }
 
 \references{
-Tsagris M. and Pantazis Y. (2026). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, spatially-lagged, spatial autoregressive and geographically-weighted regression models.
+Tsagris M. and Pantazis Y. (2026). The \eqn{\alpha}--regression for compositional data: a unified framework for standard, temporal and spatial regression models including compositional predictors.
 https://arxiv.org/pdf/2510.12663
 
 Tsagris M. (2015). Regression analysis with compositional data containing zero values.

@@ -16,13 +16,14 @@ alfa.reg2 <- function(y, x, a, xnew = NULL, ncores = 1) {
   x <- model.matrix(y ~., data.frame(x))
   ha <- t( Compositional::helm(D) )
 
-  if (is.null(colnames(x))) {
-    namx <- c("constant", paste("X", 1:p, sep = ""))
+  if ( is.null( colnames(x) ) ) {
+    p <- dim(x)[2] - 1
+    namx <- c("constant", paste("X", 1:p, sep = "") )
   } else {
-    namx <- c("constant", colnames(x)[-1])
+    namx <- c("constant", colnames(x)[-1] )
   }
 
-  if (min(y) == 0)  a <- a[a > 0]
+  if ( min(y ) == 0)  a <- a[a > 0]
   la <- length(a)
 
   # Prepare xnew if provided
@@ -30,7 +31,7 @@ alfa.reg2 <- function(y, x, a, xnew = NULL, ncores = 1) {
   if (!is.null(xnew)) {
     xnew <- as.matrix(xnew)
     if (dim(xnew)[1] == 1)  xnew <- t(xnew)
-    xnew_prepared <- model.matrix(~., data.frame(xnew))
+    xnew_prepared <- model.matrix(~., data.frame(xnew) )
   }
 
   # Function to fit a single alpha value
@@ -51,8 +52,8 @@ alfa.reg2 <- function(y, x, a, xnew = NULL, ncores = 1) {
     }
 
     est <- NULL
-    if (!is.null(xnew_prepared)) {
-      est <- cbind(1, exp(xnew_prepared %*% be))
+    if ( !is.null(xnew_prepared) ) {
+      est <- cbind( 1, exp(xnew_prepared %*% be) )
       est <- est / Rfast::rowsums(est)
     }
     rownames(be) <- namx

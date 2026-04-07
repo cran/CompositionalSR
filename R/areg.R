@@ -19,8 +19,7 @@ areg <- function(y, x, a, covb = FALSE, xnew = NULL, yb = NULL) {
 
   ## Analytical Jacobian of reg()
   jac <- function(para, ya, ax, a, ha, d, D) {
-    n <- nrow(ax)
-    p <- ncol(ax)
+    n <- dim(ax)[1]   ;   p <- dim(ax)[2]
     beta_idx  <- lapply(1:d, function(k) ((k - 1L) * p + 1L):(k * p))
     resid_idx <- lapply(1:d, function(j) ((j - 1L) * n + 1L):(j * n))
 
@@ -83,7 +82,9 @@ areg <- function(y, x, a, covb = FALSE, xnew = NULL, yb = NULL) {
   if ( is.null( colnames(x) ) ) {
     p <- dim(x)[2] - 1
     rownames(be) <- c("constant", paste("X", 1:p, sep = "") )
-  } else rownames(be)  <- c("constant", colnames(x)[-1] )
+  } else {
+    rownames(be) <- c("constant", colnames(x)[-1] )
+  }
   colnames(be) <- paste("Y", 2:D, sep = "")
 
   if ( covb ) {
