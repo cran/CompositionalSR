@@ -17,8 +17,8 @@ spatial filtering (\eqn{\alpha}-ESF) model.
 \tabular{ll}{
 Package: \tab CompositionalSR\cr
 Type: \tab Package\cr
-Version: \tab 1.3 \cr
-Date: \tab 2026-04-07\cr
+Version: \tab 1.4 \cr
+Date: \tab 2026-04-14\cr
 License: \tab GPL-2\cr
 }
 }

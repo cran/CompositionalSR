@@ -79,7 +79,6 @@ coords <- fadn[, 1:2]
 y <- fadn[, 3:7]
 x <- fadn[, 8, drop = FALSE]
 mod <- alfa.esf(y, x, a = 0.1, coords = coords)
-ice <- ice.aesf(mod$be, mod$gama, x, mod$X.esf, ind = 1)
 }
 
 

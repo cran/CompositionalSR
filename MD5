@@ -1,4 +1,4 @@
-70179d616494a8356b5f3c832082c94d *DESCRIPTION
+6d1eb456496c605a5b32612ea013f82a *DESCRIPTION
 e751a5fbe1260099e31332a2a3052e4e *NAMESPACE
 f74b74c00373a9658797fae01f09723d *R/alfa.esf.R
 175e5ad07bcf1d36be3f015e5353797b *R/alfa.pcreg.R
@@ -32,7 +32,7 @@ f502b73f8dc907825a40f6e1a08f0b85 *R/me.ar.R
 01d56de5242bd91549bdeb3edbb320f5 *R/rob.alfareg.R
 f1088ebdb703dc06d1aa462c6eb4047e *R/spat.folds.R
 1c4f4a7f43c680ef23e90e25af463576 *data/fadn.rda
-ddea8d6660933a540399147092b3bfa6 *man/CompositionalSR-package.Rd
+d538d4dfcb3a9d724717f5f08ae7a314 *man/CompositionalSR-package.Rd
 927799640fa39ec0a40358d05dbf4924 *man/alfa.esf.Rd
 5a2bf60e1b994b3f5d9e7e3c5fe7a375 *man/alfa.pcreg.Rd
 c9fe8b4e485f4fbfa4deae9660375544 *man/alfa.reg.Rd
@@ -52,7 +52,7 @@ bccac200fedb7d3cbd3f965975e6f376 *man/cv.alfareg.Rd
 88a8757e4821b5c248bc0093316da2b0 *man/fadn.Rd
 39463ead4b1dcd45e5f808e16b82d5a1 *man/gwar.Rd
 decc343019779b907e3b4297d3049454 *man/gwar.pred.Rd
-e14c84a12fa1e10fc6bf4822144d85c6 *man/ice.aesf.Rd
+99f8d4634045704bd30d7b57d40f915f *man/ice.aesf.Rd
 cef1b2748f3c7eb265ac155c50e444a1 *man/ice.areg.Rd
 67db05a9e0b0fbf973491273d9eccc82 *man/me.aesf.Rd
 a0600365e292e4185870e63d18020594 *man/me.alsx.Rd
