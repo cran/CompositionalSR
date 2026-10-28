@@ -9,7 +9,7 @@ The \eqn{\alpha}-ESF model.
 }
 
 \usage{
-alfa.esf(y, x, a, coords, model = "exp", xnew = NULL, coordsnew, yb = NULL)
+alfa.esf(y, x, a, coords, model = "exp", covb = FALSE, xnew = NULL, coordsnew, yb = NULL)
 }
 
 \arguments{
@@ -32,6 +32,10 @@ is the longitude.
 Type of kernel to model spatial dependence. The currently available options are "exp" for the
 exponential kernel, "gau" for the Gaussian kernel, and "sph" for the spherical kernel.
 For more information check the package "spmoran".
+}
+\item{covb}{
+Do you want the covariance matrix of the regression coefficients to be returned?
+If TRUE, this will slow down the process, as it is computed numerically.
 }
 \item{xnew}{
 If you have new data use it, otherwise leave it NULL.
@@ -62,6 +66,9 @@ The beta coefficients.
 }
 \item{gama}{
 The gamma coefficients of the eigenvectors.
+}
+\item{covbe}{
+The covariance matrix if covb was set to TRUE, otherwise NULL.
 }
 \item{ESF}{
 A vector with the indices of the eigenvectors used.
@@ -112,9 +119,9 @@ R implementation and documentation: Michail Tsagris \email{mtsagris@uoc.gr}.
 
 \examples{
 data(fadn)
-coords <- fadn[1:50, 1:2]
-y <- fadn[1:50, 3:7]
-x <- fadn[1:50, 8]
-mod <- alfa.esf(y, x, a = 0.1, coords = coords)
+coords <- fadn[, 1:2]
+y <- fadn[, 3:7]
+x <- fadn[, 8]
+mod <- alfa.esf(y, x, a = 0.5, coords = coords)
 }
 

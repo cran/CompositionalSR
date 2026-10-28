@@ -36,7 +36,7 @@ areg <- function(y, x, a, covb = FALSE, xnew = NULL, yb = NULL) {
         ## scalar weight per observation
         w <- Da * za[, k + 1L] * (ha[k + 1L, j] - zh[, j])
         ## block: n x p  (row-wise scaling of ax by w)
-        J[ resid_idx[[j]], beta_idx[[k]] ] <- -w * ax
+        J[ resid_idx[[j]], beta_idx[[k]] ] <-  -w * ax
       }
     }
     J
@@ -53,9 +53,13 @@ areg <- function(y, x, a, covb = FALSE, xnew = NULL, yb = NULL) {
   D <- dim(y)[2]
   d <- D - 1  ## dimensionality of the simplex
 
-  if ( a <= 1e-5 ) {
-    mod <- Compositional::comp.reg(y, x[, -1], yb = yb)
-    be <- mod$be
+  if ( abs(a) <= 1e-5 ) {
+    y0 <- Compositional::alr(y)
+    be <- solve( crossprod(x), crossprod(x, y0) )
+    be <- matrix(be, ncol = d)
+    est <- cbind( 1, exp(x %*% be) )
+    est <- Compositional::alfa(est, 0)$aff
+    dev <- sum( (ya - est)^2 )
 
   } else {
     ha  <- t( Compositional::helm(D) )
@@ -65,7 +69,7 @@ areg <- function(y, x, a, covb = FALSE, xnew = NULL, yb = NULL) {
                                 ya = ya, ax = ax, a = a, ha = ha, d = d, D = D)
     })
     be <- matrix(mod$par, ncol = d)
-
+    dev <- mod$deviance
   }  ## end if (a == 0)
 
   runtime <- proc.time() - runtime
@@ -89,7 +93,7 @@ areg <- function(y, x, a, covb = FALSE, xnew = NULL, yb = NULL) {
 
   if ( covb ) {
     res <- optim( as.vector(be), .regar, ya = ya, ax = ax, a = a, ha = ha, d = d,
-                  D = D, hessian = TRUE, method = "BFGS", control = list(maxit = 1000) )
+                  D = D, hessian = TRUE, control = list(maxit = 1000) )
     covbe <- solve(res$hessian)
     a2 <- colnames(x)
     a1 <- colnames(be)
@@ -97,7 +101,7 @@ areg <- function(y, x, a, covb = FALSE, xnew = NULL, yb = NULL) {
     colnames(covbe) <- rownames(covbe) <- nam
   } else covbe <- NULL
 
-  list(runtime = runtime, be = be, covbe = covbe, dev = mod$deviance, est = est)
+  list(runtime = runtime, be = be, covbe = covbe, dev = dev, est = est)
 }
 
 

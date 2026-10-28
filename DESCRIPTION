@@ -1,8 +1,8 @@
 Package: CompositionalSR
 Type: Package
 Title: Spatial Regression Models with Compositional Data
-Version: 1.4
-Date: 2026-04-14
+Version: 1.5
+Date: 2026-10-27
 Authors@R: person("Michail", "Tsagris", role = c("aut", "cre"), email = "mtsagris@uoc.gr") 
 Author: Michail Tsagris [aut, cre]
 Maintainer: Michail Tsagris <mtsagris@uoc.gr>
@@ -14,6 +14,6 @@ Description: Spatial and non-spatial regression models with compositional respon
 License: GPL (>= 2)
 LazyData: true
 NeedsCompilation: no
-Packaged: 2026-04-14 08:12:30 UTC; mtsag
+Packaged: 2026-10-28 07:45:11 UTC; mtsag
 Repository: CRAN
-Date/Publication: 2026-04-14 12:10:02 UTC
+Date/Publication: 2026-10-28 08:10:02 UTC
